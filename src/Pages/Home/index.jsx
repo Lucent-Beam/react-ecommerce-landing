@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <Layout>
       Eula
-      <div className="flex flex-wrap gap-4 justify-center">
+      <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
         {items?.map(({ id, title, image, price, category }) => (
           <Card
             key={id}

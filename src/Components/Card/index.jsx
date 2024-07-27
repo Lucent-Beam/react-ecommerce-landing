@@ -1,7 +1,10 @@
 import tsubasaAvatar from "../../assets/tsubasa_tof.jpg";
 import eulaAvatar from "../../assets/eula_genshin.webp";
+import { useContext } from "react";
+import { ShoppingCartContext } from "../../Context";
 
 export default function Card({ title, image, price, categoryName }) {
+  const context = useContext(ShoppingCartContext);
   return (
     <div className="bg-white cursor-pointer w-56 h-60 rounded-lg">
       <figure className="relative mb-2 w-full h-4/5">
@@ -13,7 +16,10 @@ export default function Card({ title, image, price, categoryName }) {
           src={image}
           alt="Eula"
         />
-        <div className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 pb-1">
+        <div
+          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 pb-1"
+          onClick={() => context.setCount(context.count + 1)}
+        >
           +
         </div>
       </figure>
