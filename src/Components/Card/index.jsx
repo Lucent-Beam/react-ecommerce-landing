@@ -2,9 +2,10 @@ import tsubasaAvatar from "../../assets/tsubasa_tof.jpg";
 import eulaAvatar from "../../assets/eula_genshin.webp";
 import { useContext } from "react";
 import { ShoppingCartContext } from "../../Context";
-import { PlusIcon } from "@heroicons/react/24/solid";
+import { CheckIcon, PlusIcon } from "@heroicons/react/24/solid";
 
 export default function Card({
+  id,
   title,
   image,
   price,
@@ -28,10 +29,37 @@ export default function Card({
   const addProductToCart = (event) => {
     event.stopPropagation();
     context.setCount(context.count + 1);
-    context.setCartProducts([...context.cartProducts, { title }]);
+    context.setCartProducts([
+      ...context.cartProducts,
+      { id, title, image, price },
+    ]);
     context.openCheckoutSideMenu();
     context.closeProductDetail();
     console.log(context.isCheckoutSideMenuOpened);
+  };
+
+  const renderIcon = (productAddedId) => {
+    const isInCart =
+      context.cartProducts.filter((product) => product.id === productAddedId)
+        .length > 0;
+
+    console.log("productAdded:", productAddedId, isInCart);
+    if (isInCart) {
+      return (
+        <div className="absolute top-0 right-0 flex justify-center items-center bg-black w-6 h-6 rounded-full m-2 p-1">
+          <CheckIcon className="h-6 w-6 text-white" />
+        </div>
+      );
+    } else {
+      return (
+        <div
+          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
+          onClick={(event) => addProductToCart(event)}
+        >
+          <PlusIcon className="size-6 text-black-500" />
+        </div>
+      );
+    }
   };
 
   return (
@@ -48,15 +76,10 @@ export default function Card({
           src={image}
           alt="Eula"
         />
-        <div
-          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={(event) => addProductToCart(event)}
-        >
-          <PlusIcon className="size-6 text-black-500" />
-        </div>
+        {renderIcon(id)}
       </figure>
       <p className="flex justify-between">
-        <span className="text-sm font-light">{title}</span>
+        <span className="text-sm font-light line-clamp-2">{title}</span>
         <span className="text-lg font-medium ">${price}</span>
       </p>
     </div>
