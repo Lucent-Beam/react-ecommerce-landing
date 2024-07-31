@@ -43,7 +43,6 @@ export default function Card({
       context.cartProducts.filter((product) => product.id === productAddedId)
         .length > 0;
 
-    console.log("productAdded:", productAddedId, isInCart);
     if (isInCart) {
       return (
         <div className="absolute top-0 right-0 flex justify-center items-center bg-black w-6 h-6 rounded-full m-2 p-1">

@@ -3,9 +3,32 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import { ShoppingCartContext } from "../../Context";
 import "./styles.css";
 import OrderCard from "../OrderCard";
+import { totalPrice } from "../../assets/utils";
 
 export default function CheckoutSideMenu() {
   const context = useContext(ShoppingCartContext);
+
+  const handleCheckout = () => {
+    const orderToAdd = {
+      date: "30/07/24",
+      products: context.cartProducts,
+      totalProducts: context.cartProducts.length,
+      totalPrice: totalPrice(context.cartProducts),
+    };
+
+    context.setOrder([...context.order, orderToAdd]);
+    context.setCount(0);
+    context.setCartProducts([]);
+  };
+
+  const renderCheckoutBtn = () => {
+    if (context.cartProducts.length) {
+      return <button onClick={() => handleCheckout()}>Checkout</button>;
+    }
+
+    return;
+  };
+
   return (
     <aside
       className={`${
@@ -31,6 +54,15 @@ export default function CheckoutSideMenu() {
             price={product.price}
           />
         ))}
+      </div>
+      <div className="px-6">
+        <p className="flex justify-between items-center">
+          <span className="font-light">Total:</span>
+          <span className="font-medium text-2xl">
+            ${totalPrice(context.cartProducts)}
+          </span>
+        </p>
+        {renderCheckoutBtn()}
       </div>
     </aside>
   );
