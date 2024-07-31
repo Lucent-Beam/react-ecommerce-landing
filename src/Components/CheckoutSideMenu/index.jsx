@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { ShoppingCartContext } from "../../Context";
 import "./styles.css";
@@ -23,7 +24,16 @@ export default function CheckoutSideMenu() {
 
   const renderCheckoutBtn = () => {
     if (context.cartProducts.length) {
-      return <button onClick={() => handleCheckout()}>Checkout</button>;
+      return (
+        <Link to="/my-orders/last">
+          <button
+            className="bg-black py-3 text-white w-full rounded-lg"
+            onClick={() => handleCheckout()}
+          >
+            Checkout
+          </button>
+        </Link>
+      );
     }
 
     return;
@@ -44,7 +54,7 @@ export default function CheckoutSideMenu() {
           />
         </div>
       </div>
-      <div className="px-6 overflow-y-scroll">
+      <div className="px-6 overflow-y-scroll flex-1">
         {context.cartProducts.map((product) => (
           <OrderCard
             id={product.id}
@@ -55,8 +65,8 @@ export default function CheckoutSideMenu() {
           />
         ))}
       </div>
-      <div className="px-6">
-        <p className="flex justify-between items-center">
+      <div className="px-6 mb-6">
+        <p className="flex justify-between items-center mb-2">
           <span className="font-light">Total:</span>
           <span className="font-medium text-2xl">
             ${totalPrice(context.cartProducts)}

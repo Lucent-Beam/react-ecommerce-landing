@@ -3,7 +3,13 @@ import { ShoppingCartContext } from "../../Context";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import eulaAvatar from "../../assets/eula_genshin.webp";
 
-export default function OrderCard({ id, title, image, price }) {
+export default function OrderCard({
+  id,
+  title,
+  image,
+  price,
+  showXIcon = true,
+}) {
   const context = useContext(ShoppingCartContext);
 
   const handleDelete = (productIdToRemove) => {
@@ -12,6 +18,18 @@ export default function OrderCard({ id, title, image, price }) {
     );
 
     context.setCount(context.count - 1);
+  };
+
+  const renderXIcon = () => {
+    if (showXIcon) {
+      return (
+        <XMarkIcon
+          onClick={() => handleDelete(id)}
+          className="w-4 h-4 text-black-500 cursor-pointer"
+        />
+      );
+    }
+    return;
   };
 
   return (
@@ -28,10 +46,7 @@ export default function OrderCard({ id, title, image, price }) {
       </div>
       <div className="flex items-center gap-2">
         <p className="text-lg font-medium">${price}</p>
-        <XMarkIcon
-          onClick={() => handleDelete(id)}
-          className="w-4 h-4 text-black-500 cursor-pointer"
-        />
+        {renderXIcon()}
       </div>
     </div>
   );
