@@ -18,6 +18,7 @@ export default function Navbar() {
         <li>
           <NavLink
             to="/"
+            onClick={() => context.setSearchByCategory()}
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
             All
@@ -25,15 +26,8 @@ export default function Navbar() {
         </li>
         <li>
           <NavLink
-            to="/clothes"
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            Clothes
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
             to="/electronics"
+            onClick={() => context.setSearchByCategory("electronics")}
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
             Electronics
@@ -41,23 +35,35 @@ export default function Navbar() {
         </li>
         <li>
           <NavLink
-            to="/furnitures"
+            to="/jewelery"
+            onClick={() => context.setSearchByCategory("jewelery")}
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            Furnitures
+            Jewelery
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="/toys"
+            to="/mens-clothing"
+            onClick={() => context.setSearchByCategory("men's clothing")}
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            Toys
+            Men's clothing
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/womens-clothing"
+            onClick={() => context.setSearchByCategory("women's clothing")}
+            className={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            Women's clothing
           </NavLink>
         </li>
         <li>
           <NavLink
             to="/others"
+            onClick={() => context.setSearchByCategory("others")}
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
             Others
@@ -93,7 +99,7 @@ export default function Navbar() {
         </li>
         <li className="flex items-center">
           <ShoppingBagIcon className="size-6 text-black-500" />
-          {context.count}
+          {context.cartProducts.length}
         </li>
       </ul>
     </nav>
